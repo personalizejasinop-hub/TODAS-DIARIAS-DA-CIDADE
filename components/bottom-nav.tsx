@@ -12,6 +12,7 @@ import {
   ClipboardList,
   PlusCircle,
   AlertTriangle,
+  Building2,
 } from "lucide-react"
 import { useAppStore } from "@/lib/store"
 
@@ -42,6 +43,12 @@ const CANDIDATE_TABS: NavItem[] = [
     activeIcon: <ClipboardList className="h-5 w-5" strokeWidth={2.5} />,
   },
   {
+    id: "empresas",
+    label: "Empresas",
+    icon: <Building2 className="h-5 w-5" />,
+    activeIcon: <Building2 className="h-5 w-5" strokeWidth={2.5} />,
+  },
+  {
     id: "mensagens",
     label: "Mensagens",
     icon: <MessageCircle className="h-5 w-5" />,
@@ -67,6 +74,12 @@ const CONTRATANTE_TABS: NavItem[] = [
     label: "Criar",
     icon: <PlusCircle className="h-5 w-5" />,
     activeIcon: <PlusCircle className="h-5 w-5" strokeWidth={2.5} />,
+  },
+  {
+    id: "candidatos",
+    label: "Candidatos",
+    icon: <Users className="h-5 w-5" />,
+    activeIcon: <Users className="h-5 w-5" strokeWidth={2.5} />,
   },
   {
     id: "mensagens",

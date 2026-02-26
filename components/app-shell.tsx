@@ -12,12 +12,14 @@ import { CandidateHome } from "./candidate/candidate-home"
 import { Candidaturas } from "./candidate/candidaturas"
 import { CandidateProfile } from "./candidate/candidate-profile"
 import { VagaDetail } from "./candidate/vaga-detail"
+import { ListaEmpresas } from "./candidate/lista-empresas"
 
 // Contratante screens
 import { MinhasVagas } from "./contratante/minhas-vagas"
 import { CriarVaga } from "./contratante/criar-vaga"
 import { ContratanteProfile } from "./contratante/contratante-profile"
 import { GestaoCandidatos } from "./contratante/gestao-candidatos"
+import { BancoCandidatos } from "./contratante/banco-candidatos"
 
 // Shared screens
 import { MessagesInbox } from "./shared/messages-inbox"
@@ -211,6 +213,7 @@ export function AppShell() {
               onOpenChat={(vagaId, participantName, opts) => setOverlay({ type: "chat", vagaId, participantName, ...opts })}
             />
           )}
+          {activeTab === "empresas" && <ListaEmpresas />}
           {activeTab === "mensagens" && (
             <MessagesInbox
               onOpenChat={(vagaId, participantName, opts) => setOverlay({ type: "chat", vagaId, participantName, ...opts })}
@@ -240,6 +243,7 @@ export function AppShell() {
               onCreated={() => setActiveTab("minhas-vagas")}
             />
           )}
+          {activeTab === "candidatos" && <BancoCandidatos />}
           {activeTab === "mensagens" && (
             <MessagesInbox
               onOpenChat={(vagaId, participantName, opts) => setOverlay({ type: "chat", vagaId, participantName, ...opts })}

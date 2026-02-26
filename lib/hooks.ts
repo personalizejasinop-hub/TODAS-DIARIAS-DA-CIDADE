@@ -55,6 +55,32 @@ export function useProfile() {
   }
 }
 
+export function useCandidates(enabled = true) {
+  const { data, error, isLoading, mutate } = useSWR(
+    enabled ? "/api/candidates" : null,
+    fetcher
+  )
+  return {
+    candidates: ensureArray(data),
+    isLoading,
+    error,
+    mutate,
+  }
+}
+
+export function useContratantes(enabled = true) {
+  const { data, error, isLoading, mutate } = useSWR(
+    enabled ? "/api/contratantes" : null,
+    fetcher
+  )
+  return {
+    contratantes: ensureArray(data),
+    isLoading,
+    error,
+    mutate,
+  }
+}
+
 export async function createVaga(vagaData: any) {
   const res = await fetch("/api/vagas", {
     method: "POST",

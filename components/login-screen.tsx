@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Briefcase, User, ShieldCheck, ArrowLeft, Eye, EyeOff, Mail, Lock, KeyRound, UserPlus } from "lucide-react"
 import { useAppStore } from "@/lib/store"
 import { signIn, resetPassword } from "@/lib/auth"
@@ -15,12 +16,17 @@ function formatPhone(value: string): string {
   return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
 }
 
-export function LoginScreen() {
+interface LoginScreenProps {
+  forceAdminLogin?: boolean
+}
+
+export function LoginScreen({ forceAdminLogin = false }: LoginScreenProps) {
+  const router = useRouter()
   const { setUserFromProfile } = useAppStore()
-  const [view, setView] = useState<AuthView>("welcome")
+  const [view, setView] = useState<AuthView>(forceAdminLogin ? "login" : "welcome")
   const [selectedRole, setSelectedRole] = useState<"candidato" | "contratante">("candidato")
-  const [isAdminLogin, setIsAdminLogin] = useState(false)
-  const [showAdmin, setShowAdmin] = useState(false)
+  const [isAdminLogin, setIsAdminLogin] = useState(forceAdminLogin)
+  const [showAdmin, setShowAdmin] = useState(forceAdminLogin)
   const [adminTaps, setAdminTaps] = useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -273,16 +279,24 @@ export function LoginScreen() {
           </button>
 
           {showAdmin && (
-            <button
-              onClick={() => {
-                setIsAdminLogin(true)
-                setView("login")
-              }}
-              className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-5 py-3 transition-all active:scale-[0.97]"
-            >
-              <ShieldCheck className="h-5 w-5 text-muted-foreground" />
-              <span className="text-sm font-semibold text-muted-foreground">Acesso Administrador</span>
-            </button>
+            <div className="mt-4 flex flex-col items-center gap-2">
+              <button
+                onClick={() => {
+                  setIsAdminLogin(true)
+                  setView("login")
+                }}
+                className="flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-5 py-3 transition-all active:scale-[0.97]"
+              >
+                <ShieldCheck className="h-5 w-5 text-muted-foreground" />
+                <span className="text-sm font-semibold text-muted-foreground">Acesso Administrador</span>
+              </button>
+              <a
+                href="/admin"
+                className="text-xs text-muted-foreground underline"
+              >
+                Ou acesse diretamente: /admin
+              </a>
+            </div>
           )}
         </div>
 
@@ -308,8 +322,12 @@ export function LoginScreen() {
         <div className="relative z-10 flex flex-1 flex-col w-full max-w-sm mx-auto">
           <button
             onClick={() => {
-              setView("welcome")
-              setIsAdminLogin(false)
+              if (forceAdminLogin) {
+                router.push("/")
+              } else {
+                setView("welcome")
+                setIsAdminLogin(false)
+              }
             }}
             className="mt-4 flex h-10 w-10 items-center justify-center rounded-full active:bg-muted"
           >
