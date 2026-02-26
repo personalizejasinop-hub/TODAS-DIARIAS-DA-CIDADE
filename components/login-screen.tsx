@@ -121,55 +121,73 @@ export function LoginScreen() {
     }
 
     setLoading(true)
-    const signupRes = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-        phone,
-        role: selectedRole,
-      }),
-    })
+    setError("")
 
-    const signupData = await signupRes.json()
-
-    if (!signupRes.ok) {
-      setError(signupData.error ?? "Erro ao criar conta. Tente novamente.")
-      setLoading(false)
-      return
-    }
-
-    const { data, error: authError } = await signIn(email, password)
-
-    if (authError) {
-      setError("Conta criada. Faça login na tela Entrar.")
-      setLoading(false)
-      return
-    }
-
-    // Usa o perfil retornado pelo signup ou busca da API
-    if (signupData.profile) {
-      setUserFromProfile(signupData.profile)
-    } else {
-      const res = await fetch("/api/profiles", { credentials: "include" })
-      if (res.ok) {
-        const profile = await res.json()
-        setUserFromProfile(profile)
-      } else {
-        setUserFromProfile({
-          id: data.user.id,
-          name: name.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
-          whatsapp: phone.trim(),
+    try {
+      const signupRes = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+          phone,
           role: selectedRole,
-          onboardingComplete: false,
-        })
+        }),
+        credentials: "include",
+      })
+
+      let signupData: { error?: string; profile?: Record<string, unknown> } = {}
+      try {
+        signupData = await signupRes.json()
+      } catch {
+        signupData = { error: "Resposta invalida do servidor" }
       }
+
+      if (!signupRes.ok) {
+        setError(signupData.error ?? "Erro ao criar conta. Tente novamente.")
+        setLoading(false)
+        return
+      }
+
+      const { data, error: authError } = await signIn(email, password)
+
+      if (authError) {
+        setError("Conta criada. Faça login na tela Entrar.")
+        setLoading(false)
+        return
+      }
+
+      // Usa o perfil retornado pelo signup ou busca da API
+      if (signupData.profile) {
+        setUserFromProfile(signupData.profile)
+      } else {
+        const res = await fetch("/api/profiles", { credentials: "include" })
+        if (res.ok) {
+          const profile = await res.json()
+          setUserFromProfile(profile)
+        } else {
+          setUserFromProfile({
+            id: data.user.id,
+            name: name.trim(),
+            email: email.trim(),
+            phone: phone.trim(),
+            whatsapp: phone.trim(),
+            role: selectedRole,
+            onboardingComplete: false,
+          })
+        }
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      if (msg.includes("fetch") || msg.includes("network") || msg.includes("Failed")) {
+        setError("Erro de conexao. Verifique sua internet e tente novamente.")
+      } else {
+        setError("Erro ao criar conta. Tente novamente.")
+      }
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const handleRecover = async () => {

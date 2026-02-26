@@ -3,6 +3,13 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
   try {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json(
+        { error: "Configuracao do servidor incompleta. Contate o suporte." },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
     const { email, password, name, phone, role } = body
 
