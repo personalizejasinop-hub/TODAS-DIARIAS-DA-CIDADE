@@ -1,0 +1,72 @@
+# Analise e Referencias - Todas Diarias da Cidade
+
+## O que ja esta pronto
+
+### Fluxo 0 - Onboarding + Login + Recuperacao
+- Tela 0.1 Boas-vindas: OK (Sou Candidato / Sou Contratante / Entrar / Cadastre-se)
+- Tela 0.2 Login: OK (E-mail, senha, Google, Facebook, Esqueceu senha)
+- Tela 0.3 Redefinir senha: OK (Campo e fluxo de envio)
+- Tela 0.4 Completar perfil: Parcial (onboarding atual focado em candidato)
+
+### Area do Candidato
+- C1 Home / Feed: OK
+- C2 Detalhe da Vaga: OK
+- C3 Confirmar candidatura: OK
+- C4 Candidaturas: OK
+- C5 Mensagens: OK
+- C6 Chat: OK
+- C7 Minha Agenda: NAO existe
+- C8 Historico de gigs: Parcial
+- C9 Perfil: OK
+- C10 Avaliar contratante: OK
+
+### Area do Contratante
+- E1 Cadastro PF/PJ: Parcial
+- E2 Minhas Vagas: OK
+- E3 Criar Nova Vaga: OK
+- E4 Detalhe da Vaga: Parcial
+- E5 Gestao de Candidatos: OK
+- E6 Convidar Talentos: NAO existe
+- E7 Chat: OK
+- E8 Finalizar servico: NAO existe
+- E9 Avaliar candidato: OK
+- E10 Perfil: OK
+
+### Admin
+- A1 Login Admin: Parcial (5 taps no dominio)
+- A2 Dashboard: OK
+- A3 Usuarios: OK
+- A4 Vagas: OK
+- A5 Categorias: OK
+- A6 Denuncias: OK
+- A7 Banners e Push: NAO existe
+- A8 Configuracoes: NAO existe
+
+## Sugestoes de melhoria
+1. Admin em canto pequeno com login
+2. Unificacao de contas (Candidato + Contratante)
+3. Calendario de disponibilidade
+4. Feed unificado
+5. Modal de filtros avancados
+6. Alerta de especialidade incompativel
+7. Validacao de datas
+8. CEP autocomplete
+9. Score de agilidade
+10. Integracao backend (Supabase - JA IMPLEMENTADO)
+
+## Checklist Prioridade Alta
+1. Admin: Login com usuario/senha em tela separada
+2. Admin: Remover admin da bottom nav
+3. Completar perfil (nome, telefone, CEP, raio)
+4. Cadastro Contratante PF/PJ completo
+5. Minha Agenda (calendario mensal)
+6. Convidar Talentos
+7. Finalizar servico
+8. Detalhe da vaga (contratante) com abas
+9. Persistir candidaturas (JA NO SUPABASE)
+10. Regra de chat (só abrir se candidatura enviada)
+
+## Resumo
+- ~70% do MVP implementado
+- Principais lacunas: Admin com login proprio, Minha Agenda, Convidar Talentos, Finalizar servico
+- Integracao Supabase: IMPLEMENTADA

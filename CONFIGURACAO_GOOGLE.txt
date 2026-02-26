@@ -1,0 +1,22 @@
+CONFIGURACAO PARA LOGIN COM GOOGLE
+===================================
+
+1. GOOGLE CLOUD CONSOLE (https://console.cloud.google.com)
+   - Criar projeto ou usar existente
+   - APIs & Services > Credentials > Create Credentials > OAuth client ID
+   - Tipo: Web application
+   - Authorized JavaScript origins:
+     * http://localhost:3000 (desenvolvimento)
+     * https://todasdiariasdacidade.com.br (producao)
+   - Authorized redirect URIs: copiar do Supabase Dashboard (ver passo 2)
+
+2. SUPABASE DASHBOARD (https://supabase.com/dashboard)
+   - Authentication > Providers > Google > Enable
+   - Colar Client ID e Client Secret do Google
+   - Em Redirect URLs, adicionar:
+     * http://localhost:3000/api/auth/callback
+     * https://todasdiariasdacidade.com.br/api/auth/callback
+
+3. BANCO DE DADOS (opcional)
+   - Rodar scripts/003_handle_google_user.sql no Supabase SQL Editor
+   - Atualiza o trigger para preencher nome/email do Google corretamente

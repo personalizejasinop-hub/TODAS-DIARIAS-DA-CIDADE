@@ -1,0 +1,40 @@
+VARIAVEIS DE AMBIENTE OBRIGATORIAS (Vercel / Deploy)
+====================================================
+
+No Vercel: Project Settings > Environment Variables
+
+1. NEXT_PUBLIC_SUPABASE_URL
+   - URL do projeto Supabase (ex: https://xxxx.supabase.co)
+
+2. NEXT_PUBLIC_SUPABASE_ANON_KEY
+   - Chave anon/public do Supabase
+
+3. SUPABASE_SERVICE_ROLE_KEY  *** IMPORTANTE PARA CADASTRO ***
+   - Chave service_role do Supabase (Dashboard > Settings > API)
+   - Necessaria para a API de cadastro (/api/auth/signup)
+   - Sem ela, o cadastro retorna "Database error saving new user"
+
+FIX "Database error creating new user"
+=====================================
+Se o cadastro ainda falhar com essa mensagem, execute no Supabase SQL Editor:
+
+   scripts/004_disable_trigger_fix_signup.sql
+
+Isso remove o trigger que causa o erro. Os perfis passam a ser criados
+pela API (cadastro) e pelo callback OAuth (Google).
+
+FIX "Could not find the 'email'/'name' column of 'profiles'"
+============================================================
+Se aparecer esse erro ao criar conta, execute no Supabase SQL Editor:
+
+   scripts/005_add_email_to_profiles.sql
+
+Isso adiciona as colunas name, email, phone, whatsapp e role na tabela profiles.
+
+SYNC SCHEMA COM O APP (006)
+============================
+Se seu banco tem estrutura diferente do app, execute:
+
+   scripts/006_sync_schema_com_app.sql
+
+Adiciona colunas faltantes em profiles e vagas, e permite status "publicada".

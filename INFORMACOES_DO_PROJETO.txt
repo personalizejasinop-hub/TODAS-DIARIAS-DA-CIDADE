@@ -1,0 +1,110 @@
+================================================================================
+INFORMACOES DO PROJETO - Todas Diarias da Cidade
+================================================================================
+
+ARQUIVOS DE DOCUMENTACAO:
+-------------------------
+- ANALISE_APP_REFERENCIAS.md  (analise completa, checklist, sugestoes)
+- scripts/001_create_tables.sql  (script Supabase - tabelas)
+- scripts/002_profiles.sql  (script Supabase - profiles)
+
+COMO ABRIR ARQUIVOS .MD:
+------------------------
+1. Clique com botao direito no arquivo .md
+2. "Abrir com" -> Bloco de Notas ou WordPad
+3. Ou arraste o arquivo para o Cursor/VS Code
+
+SE NAO ABRIR NO CURSOR:
+-----------------------
+- Verifique se o caminho esta correto: 
+  c:\Users\msdfe\Downloads\TODASDIARIASDACIDADE-APP\
+- Tente: Arquivo > Abrir Arquivo > selecione o .md
+
+================================================================================
+RESUMO DO CONTEUDO - ANALISE_APP_REFERENCIAS.md
+================================================================================
+
+O QUE JA ESTA PRONTO:
+- Login, cadastro, recuperar senha
+- Feed de vagas, detalhe, candidatura
+- Candidaturas, mensagens, chat
+- Minhas vagas, criar vaga, gestao de candidatos
+- Admin: dashboard, usuarios, vagas, categorias, denuncias
+
+O QUE FALTA (PRIORIDADE ALTA):
+1. Admin com login proprio (usuario/senha em tela separada)
+2. Completar perfil (dados essenciais, CEP, raio)
+3. Cadastro Contratante PF/PJ completo
+4. Minha Agenda (calendario mensal)
+5. Convidar Talentos
+6. Finalizar servico
+7. Persistir no Supabase (JA IMPLEMENTADO)
+
+SCRIPT SUPABASE:
+- Execute 001_create_tables.sql no SQL Editor do Supabase
+- NAO use 002_profiles.sql se 001 ja foi aplicado
+
+================================================================================
+COMO RODAR O PROJETO
+================================================================================
+
+1. Instalar dependencias:
+   pnpm install
+
+2. Criar arquivo .env.local na raiz com:
+   NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anonima
+
+3. Rodar em desenvolvimento:
+   pnpm dev
+
+4. Acessar: http://localhost:3000
+
+================================================================================
+ESTRUTURA DO PROJETO
+================================================================================
+
+app/                    - Rotas Next.js (pages, API, auth)
+  api/                  - APIs: vagas, candidaturas, messages, profiles
+  auth/                 - callback, reset-password
+
+components/             - Components React
+  candidate/            - Telas do candidato (home, candidaturas, perfil)
+  contratante/          - Telas do contratante (vagas, criar, gestao)
+  admin/                - Painel admin
+  shared/               - Chat, mensagens, avaliacao
+  onboarding/           - Fluxo de cadastro
+
+lib/                    - Logica e utils
+  supabase/             - Cliente, server, adapters
+  auth.ts               - signIn, signUp, signOut
+  hooks.ts              - useVagas, useCandidaturas, useMessages
+  store.ts              - Estado global (Zustand)
+
+scripts/                 - SQL para Supabase
+
+================================================================================
+APIS DISPONIVEIS
+================================================================================
+
+GET  /api/vagas         - Lista vagas
+POST /api/vagas         - Criar vaga
+
+GET  /api/candidaturas  - Lista candidaturas (?vagaId= para filtrar)
+POST /api/candidaturas  - Criar candidatura
+
+GET  /api/messages      - Lista mensagens (?vagaId= para filtrar)
+POST /api/messages      - Enviar mensagem
+
+GET  /api/profiles      - Perfil do usuario
+PUT  /api/profiles      - Atualizar perfil
+
+================================================================================
+ARQUIVOS TXT/MD
+================================================================================
+
+- INFORMACOES_DO_PROJETO.txt  (este arquivo)
+- ANALISE_APP_REFERENCIAS.txt  (analise em texto)
+- ANALISE_APP_REFERENCIAS.md   (analise em markdown)
+
+================================================================================
