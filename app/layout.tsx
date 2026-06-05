@@ -1,26 +1,24 @@
-import type { Metadata, Viewport } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
-
+import type { Metadata } from 'next'
+import { DM_Sans, Playfair_Display } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-jakarta',
-  weight: ['400', '500', '600', '700', '800'],
-})
+const dmSans = DM_Sans({ 
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"]
+});
+
+const playfair = Playfair_Display({ 
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["700", "900"]
+});
 
 export const metadata: Metadata = {
-  title: 'Diarias & Extras',
-  description: 'Encontre oportunidades de diarias e extras na sua regiao',
-  manifest: '/manifest.json',
-}
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: '#005A9C',
+  title: 'DNA PROFISSIONAL - Descubra seu perfil comportamental',
+  description: 'Uma analise humana e precisa sobre como voce funciona, como voce toma decisoes e qual caminho profissional realmente combina com quem voce e de verdade.',
+  generator: 'DNA PROFISSIONAL',
 }
 
 export default function RootLayout({
@@ -29,8 +27,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={jakarta.variable}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="pt-BR" className={`${dmSans.variable} ${playfair.variable}`}>
+      <body className="font-sans antialiased bg-[#0B0E1A] text-[#F5F7FF]">
+        {children}
+        {process.env.NODE_ENV === 'production' && <Analytics />}
+      </body>
     </html>
   )
 }
